@@ -13,6 +13,15 @@ const AddHackathon = () => {
     // Perform actions with the form data, for example, send it to an API or perform other operations
     // console.log('Form submitted:', formData);
     try {
+      // console.log(deadline, " " , name , " ", link, " ", description, " ")
+      var checks = [ deadline,name,link,description]
+      for(var i=0;i<checks.length;i++){
+        if(checks[i] == ""){
+          // found an empty field that is required
+          alert("Please fill all required fields");
+          return;
+        }
+      }
       const res = await fetch("/api/addHackathon", {
         method: "POST",
         headers: {
@@ -23,6 +32,7 @@ const AddHackathon = () => {
 
       if (res.ok) {
         router.push("/");
+        // console.log("pushed")
       } else {
         throw new Error("Failed to create a topic");
       }
