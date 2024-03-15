@@ -258,7 +258,14 @@ const Page = () => {
               </tr>
             </thead>
             <tbody>
-              {userHackathons?.map(
+            {hackathons.length === 0 ? (
+                    <tr>
+                      <td colSpan={5} className="text-center py-4">
+                        No upcoming hackathons.
+                      </td>
+                    </tr>
+                  ) : (
+              userHackathons?.map(
                 (hackathon: any, index: any) =>
                   new Date(hackathon.deadline) > new Date() && (
                     <tr key={index}>
@@ -290,7 +297,7 @@ const Page = () => {
                       </td>
                     </tr>
                   )
-              )}
+              ))}
             </tbody>
           </table>
         </div>
@@ -316,7 +323,14 @@ const Page = () => {
             </tr>
           </thead>
           <tbody>
-            {userHackathons?.map(
+          {userHackathons.length === 0 ? (
+                    <tr>
+                      <td colSpan={5} className="text-center py-4">
+                        No Past Hackathons
+                      </td>
+                    </tr>
+                  ) : (
+            userHackathons?.map(
               (hackathon: any, index: any) =>
                 new Date(hackathon.deadline) < new Date() && (
                   <tr key={index}>
@@ -348,7 +362,7 @@ const Page = () => {
                     </td>
                   </tr>
                 )
-            )}
+            ))}
           </tbody>
         </table>
         <div className="flex flex-col">
