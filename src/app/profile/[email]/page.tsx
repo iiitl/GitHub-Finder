@@ -30,6 +30,8 @@ const Page = () => {
   const [repoShown, setRepoShown] = useState([]);
   const [userTags, setUserTags] = useState<any>([]);
   const [userHackathons, setUserHackathons] = useState([]);
+  const [ongoingHackathons, setOngoingHackathons] = useState(false);
+  const [closedHackathons, setClosedHackathons] = useState(false);
   const [user, setUser] = useState();
   const formatTimeDifference = (updated_at: string | number | Date) => {
     const currentTime = new Date();
@@ -110,6 +112,25 @@ const Page = () => {
     };
     fetchCurrentUserData();
   }, []);
+
+  useEffect(() => {
+    if (userHackathons) {
+      const ongoing = userHackathons.filter(
+        (hackathon: any) => new Date(hackathon.deadline) > new Date()
+      );
+      const closed = userHackathons.filter(
+        (hackathon: any) => new Date(hackathon.deadline) < new Date()
+      );
+      if (ongoing.length > 0) {
+        setOngoingHackathons(true);
+      }
+      if (closed.length > 0) {
+        setClosedHackathons(true);
+      }
+    }
+  }
+  , [userHackathons]);
+
   return (
     <>
       <div className="mx-7 ">
@@ -173,7 +194,8 @@ const Page = () => {
 
         </div>
         {/* this is end of profile */}
-        <div className="">
+        {ongoingHackathons ? (<>
+          <div className="">
         Ongoing
         </div>
         <div className=" rounded-xl ">
@@ -236,7 +258,9 @@ const Page = () => {
             
           </table>
         </div>
-        Closed
+        </>) : <p>No ongoing hackathon</p>}
+        {closedHackathons ? (<>
+          <p>Closed</p>
         <table className="min-w-full overflow-x-auto border-gray-600 border  mb-7 ">
         <thead className="uppercase bg-gray-50 dark:bg-gray-700 text-gray-100 ">
               <tr>
@@ -296,6 +320,7 @@ const Page = () => {
           </tbody>
           
         </table>
+        </>) : <p>No Closed hackathon</p>}
 
 
         <div className="flex flex-col">

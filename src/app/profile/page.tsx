@@ -16,6 +16,9 @@ const Page = () => {
   const [userTags, setUserTags] = useState<any>([]);
   const [isButtonDisabled, setButtonDisabled] = useState(true);
   const [userHackathons, setUserHackathons] = useState([]);
+  const [ongoingHackathons, setOngoingHackathons] = useState(false);
+  const [closedHackathons, setClosedHackathons] = useState(false);
+
   const formatTimeDifference = (updated_at: string | number | Date) => {
     const currentTime = new Date();
     const updatedAtTime = new Date(updated_at);
@@ -101,6 +104,25 @@ const Page = () => {
     }
     setRepoShown(tempArray);
   }, [repoNumber, pages]);
+
+  useEffect(() => {
+    if (userHackathons) {
+      const ongoing = userHackathons.filter(
+        (hackathon: any) => new Date(hackathon.deadline) > new Date()
+      );
+      const closed = userHackathons.filter(
+        (hackathon: any) => new Date(hackathon.deadline) < new Date()
+      );
+      if (ongoing.length > 0) {
+        setOngoingHackathons(true);
+      }
+      if (closed.length > 0) {
+        setClosedHackathons(true);
+      }
+    }
+  }
+  , [userHackathons]);
+
   const removeTag = (tagToRemove: any) => {
     const updatedTags = userTags.filter((tag: any) => tag !== tagToRemove);
     setUserTags(updatedTags);
@@ -235,7 +257,11 @@ const Page = () => {
             </div>
           </div>
         </div>
+        {ongoingHackathons ? (
+        <>
+        <p>
         Ongoing
+        </p>
         <div className="rounded-xl ">
           <table className="min-w-full overflow-x-auto border-gray-600 border  mb-4 rounded-xl container">
             <thead className="uppercase bg-gray-50 dark:bg-gray-700 text-gray-100">
@@ -294,7 +320,11 @@ const Page = () => {
             </tbody>
           </table>
         </div>
-        Closed
+        </>
+        ) : <p className="my-4">No Ongoing hackathons</p>}
+        {closedHackathons ? (
+        <>
+        <p>Closed</p>
         <table className="min-w-full overflow-x-auto border-gray-600 border  mb-7">
           <thead className="uppercase bg-gray-50 dark:bg-gray-700 text-gray-100">
             <tr>
@@ -351,6 +381,9 @@ const Page = () => {
             )}
           </tbody>
         </table>
+        </>
+        ) : <p className="my-4">No Closed hackathons</p>}
+        
         <div className="flex flex-col">
           <div className="flex flex-row">
             {Array.from({ length: pages }, (_, index) => index + 1).map(
