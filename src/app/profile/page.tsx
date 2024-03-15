@@ -216,7 +216,7 @@ const Page = () => {
                     addTag("Full Stack");
                   }}
                 >
-                  Full Stack
+                 Blockchain
                 </Dropdown.Item>
                 ):null}
                 {(userTags[0] !== "Full Stack" && (userTags[1] !== "Full Stack")) ? (
@@ -226,7 +226,7 @@ const Page = () => {
                     addTag("Blockchain");
                   }}
                 >
-                  Blockchain
+                  Full Stack
                 </Dropdown.Item>
                 ):null}
                 {(userTags[0] !== "AI & ML" && userTags[1] !== "AI & ML") ? (
