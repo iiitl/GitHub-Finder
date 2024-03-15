@@ -194,7 +194,6 @@ const Page = () => {
 
         </div>
         {/* this is end of profile */}
-        {ongoingHackathons ? (<>
           <div className="">
         Ongoing
         </div>
@@ -219,6 +218,8 @@ const Page = () => {
                 </th>
               </tr>
             </thead>
+        {ongoingHackathons ? (<>
+
             <tbody>
               {userHackathons?.map(
                 (hackathon: any, index: any) =>
@@ -254,12 +255,12 @@ const Page = () => {
                   )
               )}
             </tbody>
-
+            </>) : <p>No ongoing hackathon</p>}
             
           </table>
         </div>
-        </>) : <p>No ongoing hackathon</p>}
-        {closedHackathons ? (<>
+       
+       
           <p>Closed</p>
         <table className="min-w-full overflow-x-auto border-gray-600 border  mb-7 ">
         <thead className="uppercase bg-gray-50 dark:bg-gray-700 text-gray-100 ">
@@ -281,7 +282,7 @@ const Page = () => {
                 </th>
               </tr>
             </thead>
-
+            {closedHackathons ? (<>
           <tbody className=" container">
             {userHackathons?.map(
               (hackathon: any, index: any) =>
@@ -318,9 +319,9 @@ const Page = () => {
                 )
             )}
           </tbody>
-          
+          </>) : <p>No Closed hackathon</p>}
         </table>
-        </>) : <p>No Closed hackathon</p>}
+       
 
 
         <div className="flex flex-col">
