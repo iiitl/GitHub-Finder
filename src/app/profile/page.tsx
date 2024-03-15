@@ -309,7 +309,7 @@ const Page = () => {
                           onClick={() => {
                             router.push(`/hackathon/${hackathon._id}`);
                           }}
-                          className="bg-blue-900 rounded px-4 py-2"
+                          className="flex flex-row w-1/2 border text-center bg-red-600 rounded-xl justify-center text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium   px-2 py-1 border-gray-600  mx-4 text-xs"
                         >
                           Visit
                         </button>
@@ -371,7 +371,7 @@ const Page = () => {
                         onClick={() => {
                           router.push(`/hackathon/${hackathon._id}`);
                         }}
-                        className="bg-blue-900 rounded px-4 py-2"
+                        className="flex flex-row w-1/2 border text-center bg-red-600 rounded-xl justify-center text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium   px-2 py-1 border-gray-600  mx-4 text-xs"
                       >
                         Visit
                       </button>
@@ -412,7 +412,7 @@ const Page = () => {
                   </div>
                   <a
                     href={(repo as any)?.html_url}
-                    className="bg-blue-500 text-white rounded-md p-2 text-xs hover:bg-blue-600"
+                    className="flex flex-row border text-center bg-red-600 rounded-xl justify-center text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium   px-3 py-2 border-gray-600  mx-4 text-xs"
                     target="_blank"
                     rel="noopener noreferrer"
                   >

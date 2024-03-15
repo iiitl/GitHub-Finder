@@ -351,7 +351,7 @@ const Page = () => {
                   </div>
                   <a
                     href={(repo as any)?.html_url}
-                    className="bg-blue-500 text-white rounded-full py-1 px-3 text-xs hover:bg-blue-600 "
+                    className="flex flex-row border text-center bg-red-600 rounded-xl justify-center text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium   px-3 py-2 border-gray-600 text-xs"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
