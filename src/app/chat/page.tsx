@@ -144,10 +144,10 @@ const page = () => {
   }, [roomName]);
   console.log("allroom", allRooms)
   return (
-    <div className="flex h-[100vh]">
+    <div className="h-[88vh] overflow-hidden flex ">
       {/* Left Sidebar (Inbox) */}
-      <div className="w-1/4 h-full bg-gray-800 p-4 overflow-hidden">
-        <h1 className="text-2xl p-2 font-bold ">Inbox</h1>
+      <div className="w-1/4 h-full bg-gray-800 p-4 overflow-scroll">
+      <h1 className="text-2xl p-2 font-bold ">Inbox</h1>
         <ul className="flex flex-col">
           {allRooms?.map((item: any, i: any) => (
             <button
@@ -176,13 +176,13 @@ const page = () => {
 
       {/* Right Chat Section */}
       {roomName != "" ? (
-        <div
-          className="w-3/4 h-full bg-gray-600 text-gray-900 overflow-scroll"
-          id="chatBox"
-          ref={chatBoxRef}
-        >
-         <div className="bg-gray-700 p-4">
-         <p className="text-base text-black">Members : </p>
+      <div
+        className="w-3/4 bg-gray-600 text-gray-900 overflow-scroll "
+        id="chatBox"
+        ref={chatBoxRef}
+      >
+        <div className="md:h-[12%] h-[5%] bg-gray-700 p-4 absolute w-full">
+          <p className="text-base text-black">Members : </p>
           <div className="flex flex-row gap-3 ">
             {(currentRoom as any)?.members?.map((m: any, i: any) => {
               if( m != (currentUser as any)?.username ){
@@ -196,8 +196,9 @@ const page = () => {
               }
             })}
           </div>
-         </div>
-          <h1 className="text-2xl font-bold p-4">Chat</h1>
+        </div>
+        <div className="md:h-[88%] h-[90%] overflow-scroll px-4">
+        <h1 className="text-2xl font-bold p-4 my-2">Chat</h1>
           <div>
             {inbox.map((i: any, id: any) => (
               <div className="py-2" key={id}>
@@ -237,25 +238,27 @@ const page = () => {
               </div>
             ))}
           </div>
-          <div className="flex fixed bottom-5 w-[80%] h-12">
+        </div>
+        <div className="flex md:w-full w-[80%] md:h-[10%] h-[4%] my-2 px-2">
             <input
               value={message}
-              className="text-black bg-blue-200 w-[80%] rounded-l-lg active:border-none px-4 py-2"
+              className="text-black focus:outline-none bg-blue-200 md:w-[85%] w-[90%] rounded-l-lg active:border-none px-4 py-2"
               onChange={(e) => {
                 setMessage(e.target.value);
               }}
             />
             <button 
             onClick={handleSendMessage}
-            className="font-extrabold bg-blue-600 w-[10%] rounded-r-lg px-4"
+            className="font-extrabold bg-blue-600 md:w-[15%] rounded-r-lg px-4"
             >Send</button>
           </div>
-        </div>
-      ) : (
+      </div>) 
+      : ( 
         <div className="text-xl font-bold text-gray-700 mt-4">
           You have no rooms
         </div>
-      )}
+      )
+      }
     </div>
   );
 };
