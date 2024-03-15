@@ -133,7 +133,7 @@ const page = () => {
               <tr key={index}>
                 <td className="flex flex-row gap-2">
                   <img
-                    className="rounded-full w-16 h-16 object-cover"
+                    className="rounded-full w-16 h-16 object-cover my-2"
                     src={u.avatar}
                     alt={`Avatar of ${u.username}`}
                   />
@@ -143,12 +143,12 @@ const page = () => {
                 <td>
                   <button
                     onClick={() => router.push(`/profile/${u.username}`)}
-                    className="bg-blue-900"
+                    className="bg-blue-900 px-3 py-2 rounded-lg"
                   >
                     View Profile
                   </button>
                   <button onClick={()=>{handleChat(u)}}
-                    className="bg-red-900 ml-3"
+                    className="bg-red-900 ml-3 px-3 py-2 rounded-lg"
                   >
                     Chat
                   </button>
