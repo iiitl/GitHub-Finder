@@ -1,5 +1,5 @@
 "use client";
-import { SetStateAction, useEffect, useState } from "react";
+import { SetStateAction, useEffect, useId, useState } from "react";
 import { useSession } from "next-auth/react";
 import Hackathon from "@/models/Hackathon";
 import { usePathname } from "next/navigation";
@@ -128,200 +128,196 @@ const Page = () => {
         setClosedHackathons(true);
       }
     }
-  }
-  , [userHackathons]);
+  }, [userHackathons]);
 
   return (
     <>
-      <div className="mx-7 ">
+      <main className="mx-7 ">
         {/* This is the start of profile */}
         <div className="md:flex justify-evenly align-middle p-10  mb-5 ">
-
-            <div className="text-center ">
-              <div className="flex justify-center">
+          <div className="text-center ">
+            <div className="flex justify-center">
               <img
                 src={user?.["avatar"]}
                 alt="Profile Picture"
                 className="rounded-[50%] xl:h-80 xl:w-80  h-60 sm:h-80  border-8 border-[rgb(30,28,74)] "
                 // style={{width: "50%", height: "50%"}}
               />
-              </div>
-              <div>
+            </div>
+            <div>
               <p className="ml-10 mt-6 text-2xl text-green-400  ">
                 {user?.["name"]}
               </p>
+            </div>
+          </div>
+          <div className="border-gray-600 border  rounded-lg  ">
+            <li className="list-none ">
+              <p className="m-4 ">
+                <span className="text-xl">Email:</span>{" "}
+                <span className="text-base">{user?.["email"]}</span>
+              </p>
+            </li>
+            <li className="list-none ">
+              <p className="m-4">
+                <span className="text-xl">Username:</span>{" "}
+                <span className="text-base">{user?.["username"]}</span>
+              </p>
+            </li>
+            <li className="list-none">
+              <p className="m-4">
+                <span className="text-xl">Link:</span>{" "}
+                <span className="text-base text-blue-600">{user?.["link"]}</span>
+              </p>
+            </li>
+            <div>
+              <button
+                type="button"
+                className="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4  border focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg  px-3 py-1 border-gray-600 text-center mx-4 text-xs"
+              >
+                Visit
+              </button>
+            </div>
+            <div className="flex flex-col m-4">
+              <div className="text-lg">
+                {userTags.map((u: any, i: any) => {
+                  return <div>{u}</div>;
+                })}
               </div>
             </div>
-            <div className="border-gray-600 border  rounded-lg  ">
-              <table>
-                <tr>
-                  <p className="m-4 ">
-                    <span className="text-lg">Email:</span>{" "}
-                    <span className="text-sm">{user?.["email"]}</span>
-                  </p>
-                </tr>
-                <tr>
-                  <p className="m-4">
-                    <span className="text-lg">Username:</span>{" "}
-                    <span className="text-sm">{user?.["username"]}</span>
-                  </p>
-                </tr>
-                <tr>
-                  <p className="m-4">
-                    <span className="text-lg">Link:</span>{" "}
-                    <span className="text-sm text-blue-600">
-                      {user?.["link"]}
-                    </span>
-                  </p>
-                </tr>
-                <div>
-                  <button
-                    type="button"
-                    className="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4  border focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg  px-3 py-1 border-gray-600 text-center mx-4 text-xs"
-                  >
-                    Visit
-                  </button>
-                </div>
-                <div className="flex flex-col m-4">
-                  <span className="text-lg">
-                    {userTags.map((u: any, i: any) => {
-                      return <div>{u}</div>;
-                    })}
-                  </span>
-                </div>
-              </table>
-            </div>
-
+          </div>
         </div>
         {/* this is end of profile */}
-        {ongoingHackathons ? (<>
-          <div className="">
-        Ongoing
-        </div>
-        <div className=" rounded-xl ">
-          <table className="min-w-full overflow-x-auto border-gray-600 border  mb-4 rounded-xl container">
-            <thead className="uppercase bg-gray-50 dark:bg-gray-700 text-gray-100 ">
-              <tr>
-                <th className="px-6 py-3 text-left text-sm font-medium text-gray-300 uppercase tracking-wider ">
-                  <span className="">Hackathon Name</span>
-                </th>
-                <th className="px-6 py-3 text-left text-sm font-medium text-gray-300 uppercase tracking-wider ">
-                  <span className="">Deadline</span>
-                </th>
-                <th className="px-6 py-3 text-left text-sm font-medium text-gray-300 uppercase tracking-wider">
-                  <span className=" invisible md:visible  absolute md:relative  ">Links</span>
-                </th>
-                <th className="px-6 py-3 text-left text-sm font-medium text-gray-300 uppercase tracking-wider">
-                <span className=" invisible md:visible absolute md:relative ">Description</span>
-                </th>
-                <th className="px-6 py-3 text-left text-sm font-medium text-gray-300 uppercase tracking-wider">
-                <span className=" ">Apply</span>
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {userHackathons?.map(
-                (hackathon: any, index: any) =>
-                  new Date(hackathon.deadline) > new Date() && (
-                    <tr key={index}>
-                      <td className="py-2 px-3 text-sm">{hackathon.name}</td>
-                      <td className="py-2 px-3 text-sm  ">
-                        {convertDate(hackathon.deadline)}
-                      </td>
-                      <td className="py-2 px-3 text-sm">
-                        <a
-                          href={hackathon.link}
-                          target="_blank"
-                          className="text-blue-500 invisible md:visible absolute md:relative"
-                        >
-                          Website
-                        </a>
-                      </td>
-                      <td className="py-2 px-3 text-sm  invisible md:visible  absolute md:relative">
-                        {hackathon.description}
-                      </td>
-                      <td className="py-2 px-3 text-sm ">
-                        <button
-                          onClick={() => {
-                            router.push(`/hackathon/${hackathon._id}`);
-                          }}
-                          className="flex flex-row w-1/2 border text-center bg-red-600 rounded-full justify-center text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium    py-1 border-gray-600  mx-4 text-xs"
-                        >
-                          Visit
-                        </button>
-                      </td>
-                    </tr>
-                  )
-              )}
-            </tbody>
-
-            
-          </table>
-        </div>
-        </>) : <p>No ongoing hackathon</p>}
-        {closedHackathons ? (<>
-          <p>Closed</p>
-        <table className="min-w-full overflow-x-auto border-gray-600 border  mb-7 ">
-        <thead className="uppercase bg-gray-50 dark:bg-gray-700 text-gray-100 ">
-              <tr>
-                <th className="px-6 py-3 text-left text-sm font-medium text-gray-300 uppercase tracking-wider ">
-                  <span className="">Hackathon Name</span>
-                </th>
-                <th className="px-6 py-3 text-left text-sm font-medium text-gray-300 uppercase tracking-wider ">
-                  <span className=" ">Deadline</span>
-                </th>
-                <th className="px-6 py-3 text-left text-sm font-medium text-gray-300 uppercase tracking-wider">
-                  <span className=" invisible md:visible  absolute md:relative ">Link</span>
-                </th>
-                <th className="px-6 py-3 text-left text-sm font-medium text-gray-300 uppercase tracking-wider">
-                <span className=" invisible md:visible absolute md:relative ">Description</span>
-                </th>
-                <th className="px-6 py-3 text-left text-sm font-medium text-gray-300 uppercase tracking-wider">
-                <span className=" ">Apply</span>
-                </th>
-              </tr>
-            </thead>
-
-          <tbody className=" container">
-            {userHackathons?.map(
-              (hackathon: any, index: any) =>
-                new Date(hackathon.deadline) < new Date() && (
-                  <tr key={index}>
-                    <td className="py-2 px-3 text-sm ">{hackathon.name}</td>
-                    <td className="py-2 px-3 text-sm   ">
-                      {convertDate(hackathon.deadline)}
-                    </td>
-                    <td className="py-2 px-3 text-sm ">
-                      <a
-                        href={hackathon.link}
-                        target="_blank"
-                        className="text-blue-500 invisible md:visible   md:relative "
-                      >
-                        Website
-                      </a>
-                    </td>
-                    <td className="py-2 px-3 text-sm  basis-4 flex   invisible md:visible   md:relative">
-                      {hackathon.description}
-                    </td>
-                    <td className="py-2 px-3 text-sm  ">
-                      <button
-                        onClick={() => {
-                          router.push(`/hackathon/${hackathon._id}`);
-                        }}
-                        className="flex flex-row w-1/2 border text-center bg-red-600 rounded-xl justify-center text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium   px-2 py-1 border-gray-600  mx-4 text-xs"
-                      >
-                        Visit
-                      </button>
-                    </td>
+        {ongoingHackathons ? (
+          <>
+            <p>Ongoing</p>
+            <div className="rounded-xl ">
+              <table className="min-w-full overflow-x-auto border-gray-600 border  mb-4 rounded-xl container">
+                <thead className="uppercase bg-gray-50 dark:bg-gray-700 text-gray-100">
+                  <tr>
+                    <th className="px-6 py-3 text-left text-sm font-medium text-gray-300 uppercase tracking-wider">
+                      Hackathon Name
+                    </th>
+                    <th className="px-6 py-3 text-left text-sm font-medium text-gray-300 uppercase tracking-wider">
+                      Deadline
+                    </th>
+                    <th className="px-6 py-3 text-left text-sm font-medium text-gray-300 uppercase tracking-wider">
+                      Link
+                    </th>
+                    <th className="px-6 py-3 text-left text-sm font-medium text-gray-300 uppercase tracking-wider">
+                      Description
+                    </th>
+                    <th className="px-6 py-3 text-left text-sm font-medium text-gray-300 uppercase tracking-wider">
+                      Apply
+                    </th>
                   </tr>
-                
-                )
-            )}
-          </tbody>
-          
-        </table>
-        </>) : <p>No Closed hackathon</p>}
+                </thead>
+                <tbody>
+                  {userHackathons?.map(
+                    (hackathon: any, index: any) =>
+                      new Date(hackathon.deadline) > new Date() && (
+                        <tr key={index}>
+                          <td className="py-2 px-3 text-sm">
+                            {hackathon.name}
+                          </td>
+                          <td className="py-2 px-3 text-sm">
+                            {convertDate(hackathon.deadline)}
+                          </td>
+                          <td className="py-2 px-3 text-sm">
+                            <a
+                              href={hackathon.link}
+                              target="_blank"
+                              className="text-blue-500 invisible md:visible absolute md:relative"
+                            >
+                              Website
+                            </a>
+                          </td>
+                          <td className="py-2 px-3 text-sm  invisible md:visible  absolute md:relative">
+                            {hackathon.description}
+                          </td>
+                          <td className="py-2 px-3 text-sm ">
+                            <button
+                              onClick={() => {
+                                router.push(`/hackathon/${hackathon._id}`);
+                              }}
+                              className="flex flex-row w-1/2 border text-center bg-red-600 rounded-full justify-center text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium    py-1 border-gray-600  mx-4 text-xs"
+                            >
+                              Visit
+                            </button>
+                          </td>
+                        </tr>
+                      )
+                  )}
+                </tbody>
+              </table>
+            </div>
+          </>
+        ) : (
+          <p className="my-4">No Ongoing hackathons</p>
+        )}
 
+        {closedHackathons ? (
+          <>
+            <p>Closed</p>
+            <table className="min-w-full overflow-x-auto border-gray-600 border  mb-7">
+              <thead className="uppercase bg-gray-50 dark:bg-gray-700 text-gray-100">
+                <tr>
+                  <th className="px-6 py-3 text-left text-sm font-medium text-gray-300 uppercase tracking-wider">
+                    Hackathon Name
+                  </th>
+                  <th className="px-6 py-3 text-left text-sm font-medium text-gray-300 uppercase tracking-wider">
+                    Deadline
+                  </th>
+                  <th className="px-6 py-3 text-left text-sm font-medium text-gray-300 uppercase tracking-wider">
+                    Link
+                  </th>
+                  <th className="px-6 py-3 text-left text-sm font-medium text-gray-300 uppercase tracking-wider">
+                    Description
+                  </th>
+                  <th className="px-6 py-3 text-left text-sm font-medium text-gray-300 uppercase tracking-wider">
+                    Apply
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {userHackathons?.map(
+                  (hackathon: any, index: any) =>
+                    new Date(hackathon.deadline) < new Date() && (
+                      <tr key={index}>
+                        <td className="py-2 px-3 text-sm">{hackathon.name}</td>
+                        <td className="py-2 px-3 text-sm">
+                          {convertDate(hackathon.deadline)}
+                        </td>
+                        <td className="py-2 px-3 text-sm">
+                          <a
+                            href={hackathon.link}
+                            target="_blank"
+                            className="text-blue-500 invisible md:visible   md:relative "
+                          >
+                            Website
+                          </a>
+                        </td>
+                        <td className="py-2 px-3 text-sm  basis-4 flex   invisible md:visible   md:relative">
+                          {hackathon.description}
+                        </td>
+                        <td className="py-2 px-3 text-sm">
+                          <button
+                            onClick={() => {
+                              router.push(`/hackathon/${hackathon._id}`);
+                            }}
+                            className="flex flex-row w-1/2 border text-center bg-red-600 rounded-xl justify-center text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium   px-2 py-1 border-gray-600  mx-4 text-xs"
+                          >
+                            Visit
+                          </button>
+                        </td>
+                      </tr>
+                    )
+                )}
+              </tbody>
+            </table>
+          </>
+        ) : (
+          <p className="my-4">No Closed hackathons</p>
+        )}
 
         <div className="flex flex-col">
           <div className="flex flex-row ">
@@ -370,7 +366,7 @@ const Page = () => {
             ))}
           </div>
         </div>
-      </div>
+      </main>
     </>
   );
 };

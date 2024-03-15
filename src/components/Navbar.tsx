@@ -6,7 +6,9 @@ import { FiAlignRight } from "react-icons/fi";
 import { CiSearch } from "react-icons/ci";
 
 const Navbar = () => {
-  const [allUsers, setAllUsers] = useState(null);
+  const [allUsers, setAllUsers] = useState([]);
+  const [crossButton, setCrossButton] = useState(false);
+  const [searchedUser, setSearchedUser] = useState<any>([]);
   const [inputText, setInputText] = useState("");
   const getUsers = async () => {
     try {
@@ -20,6 +22,35 @@ const Navbar = () => {
       console.log("Error loading users: ", error);
     }
   };
+
+  const getTop5Users = (allUsers: any[], searchInput: string): any[] => {
+    const filteredUsers = allUsers.filter(user =>
+      user.name.toLowerCase().includes(searchInput.toLowerCase())
+    );
+    const sortedUsers = filteredUsers.sort((a, b) => {
+      if (a.name.length < b.name.length) return -1;
+      if (a.name.length > b.name.length) return 1;
+      return 0;
+    });
+    const top5Users = sortedUsers.slice(0, 5);
+    return top5Users;
+  };
+
+  
+  const handleSearch = (e:any) => {
+    setInputText(e.target.value);
+    const top5Users = getTop5Users(allUsers, inputText);
+    if(top5Users){
+      setCrossButton(true);
+    }
+    setSearchedUser(top5Users);
+  }
+
+  useEffect(()=> {
+    setInputText("");
+    setSearchedUser([]);
+  },[])
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -61,15 +92,36 @@ const Navbar = () => {
                 </li>
               </Link>
             </div>
-            <li className="text-black pt-2 font-serif">
+            <li className="text-black pt-2 font-serif flex">
               <input
-                className=" w-full h-5 align-middle mt-1"
+                className="w-full h-8 align-middle text-base px-4 py-2 rounded-l-md focus:outline-none"
                 value={inputText}
-                onChange={(e: any) => {
-                  setInputText(e.target.value);
-                }}
+                onChange={
+                  handleSearch
+                }
               />
+              {crossButton ?
+                (<button 
+                onClick={() => {setSearchedUser([]); setInputText(""); setCrossButton(false)}}
+                className="font-bold text-black bg-white px-2 rounded-r-md">X</button>) : 
+                <CiSearch className="font-bold h-8 text-black bg-white text-3xl rounded-r-md"/>
+                }
             </li>
+            <div className="relative">
+                {searchedUser ? (
+                  <div className="absolute md:left-0 right-10 top-14 bg-[rgb(10,1,31)] w-60 rounded-lg border border-gray-500">
+                    {searchedUser.map((user: any) => (
+                      <Link href={`/profile/${user.username}`} key={user._id}>
+                        <li className="hover:text-gray-300 text-sm px-4 py-2 font-serif">
+                          {user.name}
+                        </li>
+                      </Link>
+                    ))}
+                  </div>
+                ) : (<div className="absolute md:left-0 right-10 top-14 bg-[rgb(10,1,31)] w-60 rounded-lg border border-gray-500">
+                  <p className="hover:text-gray-300 text-sm px-4 py-2 font-serif">NO USER FOUND</p>
+                  </div>) }
+            </div>
             <div className="flex gap-10  invisible md:visible absolute md:relative">
               {session ? (
                 <Link href="/chat" passHref>
