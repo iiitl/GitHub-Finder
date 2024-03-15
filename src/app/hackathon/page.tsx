@@ -129,7 +129,7 @@ const Page = () => {
                   {hackathons.length === 0 ? (
                     <tr>
                       <td colSpan={5} className="text-center py-4">
-                        No upcoming hackathons
+                        No upcoming Hackathons
                       </td>
                     </tr>
                   ) : (

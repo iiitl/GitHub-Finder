@@ -258,10 +258,10 @@ const Page = () => {
               </tr>
             </thead>
             <tbody>
-            {hackathons.length === 0 ? (
+            {userHackathons.length === 0 ? (
                     <tr>
                       <td colSpan={5} className="text-center py-4">
-                        No upcoming hackathons.
+                        No upcoming Hackathons
                       </td>
                     </tr>
                   ) : (
