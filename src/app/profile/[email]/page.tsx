@@ -315,7 +315,7 @@ const Page = () => {
               }
             )}
           </div>
-          <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4   grid-rows-3 gap-4 ">
+          <div className="grid sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3  grid-rows-3 lg:gap-8 gap-4">
             {repoShown.map((repo, i) => (
               <div className="border border-gray-600 rounded-md px-2 py-2">
                 <div className="flex items-center justify-between mb-4">
