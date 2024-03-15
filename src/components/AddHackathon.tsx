@@ -4,36 +4,47 @@ import { useRouter } from "next/navigation";
 const AddHackathon = () => {
   const router = useRouter();
   const [deadline, setDeadline] = useState("");
+  const [error, setError] = useState("");
   const [link, setLink] = useState("");
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
+
+  //function to check every field is filled
+  const isValid = () => {
+    return deadline && link && name && description;
+  };
 
   const handleSubmit = async (event: any) => {
     event.preventDefault();
     // Perform actions with the form data, for example, send it to an API or perform other operations
     // console.log('Form submitted:', formData);
-    try {
-      const res = await fetch("/api/addHackathon", {
-        method: "POST",
-        headers: {
-          "Content-type": "application/json",
-        },
-        body: JSON.stringify({ deadline, name, link, description }),
-      });
-
-      if (res.ok) {
-        router.push("/");
-      } else {
-        throw new Error("Failed to create a topic");
+    if (!isValid()) {
+      setError("Please fill all the fields");
+    } else {
+      try {
+        const res = await fetch("/api/addHackathon", {
+          method: "POST",
+          headers: {
+            "Content-type": "application/json",
+          },
+          body: JSON.stringify({ deadline, name, link, description }),
+        });
+  
+        if (res.ok) {
+          router.push("/");
+        } else {
+          throw new Error("Failed to create a topic");
+        }
+      } catch (error) {
+        console.log(error);
       }
-    } catch (error) {
-      console.log(error);
     }
   };
 
   return (
     <div className="max-w-md mx-auto m-4 p-6 bg-gray-100 rounded-md text-black">
       <h2 className="text-2xl mb-4">Create a Hackathon</h2>
+      <p className="text-red-500 py-2 text-sm">{error}</p>
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
           <label className="block text-gray-700">Deadline:</label>
