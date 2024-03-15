@@ -184,11 +184,13 @@ const Page = () => {
             </p>
             <p className="m-4">
               <span className="text-lg">Link: </span>
-              <span className="text-sm">{currentUser?.["link"]}</span>
+              <span className="text-sm text-blue-600 hover:text-blue-700">{currentUser?.["link"]}</span>
             </p>
-            <div className="flex flex-row gap-5 ">
+            <div className="flex gap-4 p-2">
+              <div>
               <Dropdown label="Tags" dismissOnClick={false}>
-                <Dropdown.Item
+                {(userTags[0] !== "Frontend" && userTags[1] !== "Frontend") ? (
+                  <Dropdown.Item
                   className="bg-white"
                   onClick={() => {
                     addTag("Frontend");
@@ -196,7 +198,9 @@ const Page = () => {
                 >
                   Frontend
                 </Dropdown.Item>
-                <Dropdown.Item
+                ):null}
+                {(userTags[1] !== "Backend" && userTags[0] !== "Backend") ? (
+                  <Dropdown.Item
                   className="bg-white"
                   onClick={() => {
                     addTag("Backend");
@@ -204,7 +208,9 @@ const Page = () => {
                 >
                   Backend
                 </Dropdown.Item>
-                <Dropdown.Item
+                ):null}
+                {(userTags[0] !== "Blockchain" && userTags[1] !== "Blockchain") ? (
+                  <Dropdown.Item
                   className="bg-white"
                   onClick={() => {
                     addTag("Full Stack");
@@ -212,7 +218,9 @@ const Page = () => {
                 >
                   Full Stack
                 </Dropdown.Item>
-                <Dropdown.Item
+                ):null}
+                {(userTags[0] !== "Full Stack" && (userTags[1] !== "Full Stack")) ? (
+                  <Dropdown.Item
                   className="bg-white"
                   onClick={() => {
                     addTag("Blockchain");
@@ -220,7 +228,9 @@ const Page = () => {
                 >
                   Blockchain
                 </Dropdown.Item>
-                <Dropdown.Item
+                ):null}
+                {(userTags[0] !== "AI & ML" && userTags[1] !== "AI & ML") ? (
+                  <Dropdown.Item
                   className="bg-white"
                   onClick={() => {
                     addTag("AI & ML");
@@ -228,32 +238,36 @@ const Page = () => {
                 >
                   AI & ML
                 </Dropdown.Item>
+                ):null}
               </Dropdown>
-              <div className="flex flex-col gap-3 ">
+              </div>
+              <div className="flex flex-col gap-3 justify-start ">
                 {userTags.map((u: any, i: any) => {
                   return (
                     <button
                       onClick={() => {
                         removeTag(u);
                       }}
-                      className="bg-red-900 w-fit rounded border"
+                      className="rounded bg-red-800 px-2 py-1 "
                     >
-                      {u} X
+                      {u} <span className="text-black text-base text-start pb-2">X</span>
                     </button>
                   );
                 })}
               </div>
-              <button
+             <div>
+             <button
                 disabled={isButtonDisabled}
                 onClick={() => {
                   handleUpdateTags();
                 }}
                 className={`${
                   isButtonDisabled ? "bg-red-900" : "bg-blue-900"
-                } border "text-white focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg  px-3 py-1 border-gray-600 text-center mx-4 text-xs`}
+                } border "text-white focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium text-base rounded-lg  px-3 py-1 border-gray-600 text-center mx-4`}
               >
                 SAVE
               </button>
+             </div>
             </div>
           </div>
         </div>
