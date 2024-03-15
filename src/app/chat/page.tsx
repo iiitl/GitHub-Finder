@@ -202,17 +202,36 @@ const page = () => {
             {inbox.map((i: any, id: any) => (
               <div className="py-2" key={id}>
                 <div className="flex items-center">
-                <img
-                  src={i.avatar_url}
-                  alt="lolo"
-                  className="rounded-full w-8 h-8 m-2 object-cover"
-                />
-                <p className="text-sm">
-                {i.sender} : 
-                </p>
-                <p className="text-black pl-4">
-                {i.message}
-                </p>
+                  {(i.sender === (currentUser as any)?.username) ? (
+                     <div className="flex items-end w-full flex-row-reverse">
+                      <img
+                     src={i.avatar_url}
+                     alt="lolo"
+                     className="rounded-full w-8 h-8 m-2 object-cover"
+                   />
+                    <div>
+                    <p className="bg-blue-600 text-white p-2 rounded-lg">
+                      {i.message}
+                    </p>
+                    <p className="text-xs text-end text-black font-semibold">{i.sender}</p>
+                    </div>
+                    
+                     </div>
+                  ) : (
+                    <div className="flex justify-start">
+                      <img
+                    src={i.avatar_url}
+                    alt="lolo"
+                    className="rounded-full w-8 h-8 m-2 object-cover"
+                  />
+                    <div>
+                    <p className="bg-gray-400 text-white p-2 rounded-lg">
+                      {i.message}
+                    </p>
+                    <p className="text-xs text-start text-black font-semibold">{i.sender}</p>
+                    </div>
+                    </div>
+                  )}
                 </div>
                 {scrollToBottom()}
               </div>
