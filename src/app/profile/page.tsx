@@ -213,7 +213,7 @@ const Page = () => {
                   <Dropdown.Item
                   className="bg-white"
                   onClick={() => {
-                    addTag("Full Stack");
+                    addTag("Blockchain");
                   }}
                 >
                  Blockchain
@@ -223,7 +223,7 @@ const Page = () => {
                   <Dropdown.Item
                   className="bg-white"
                   onClick={() => {
-                    addTag("Blockchain");
+                    addTag("Full Stack");
                   }}
                 >
                   Full Stack
