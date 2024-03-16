@@ -181,7 +181,7 @@ const page = () => {
         id="chatBox"
         ref={chatBoxRef}
       >
-        <div className="md:h-[12%] h-[5%] bg-gray-700 p-4 absolute w-full">
+        <div className="md:h-[12%] h-[5%] bg-gray-700 p-4 absolute w-3/4">
           <p className="text-base text-black">Members : </p>
           <div className="flex flex-row gap-3 ">
             {(currentRoom as any)?.members?.map((m: any, i: any) => {
@@ -197,7 +197,9 @@ const page = () => {
             })}
           </div>
         </div>
+       
         <div className="md:h-[88%] h-[90%] overflow-scroll px-4">
+        <div className="-z-10 h-[5%] md:h-[12%] p-4 w-3/4"></div>
         <h1 className="text-2xl font-bold p-4 my-2">Chat</h1>
           <div>
             {inbox.map((i: any, id: any) => (
