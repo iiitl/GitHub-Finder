@@ -35,10 +35,9 @@ const Navbar = () => {
     const top5Users = sortedUsers.slice(0, 5);
     return top5Users;
   };
-
-  
+ 
   const handleSearch = (e:any) => {
-    setInputText(e.target.value);
+    setInputText(e.target.value)
     const top5Users = getTop5Users(allUsers, inputText);
     if(top5Users){
       setCrossButton(true);
