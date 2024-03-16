@@ -16,7 +16,7 @@ const RemoveHackathon = ({ id }: any) => {
     }
   };
   return (
-    <button onClick={removeTopic} className="  bg-red-500 p-3">
+    <button onClick={removeTopic} className="rounded-full py-2 px-3 bg-red-500">
       delete
     </button>
   );

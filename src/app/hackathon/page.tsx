@@ -114,7 +114,7 @@ const Page = () => {
     <>
       <div>
         <div>
-          {currentUser?.["role"] === "admin" ? <AddHackathon /> : <AddHackathon/>}
+          {currentUser?.["role"] === "admin" ? <AddHackathon /> : null}
         </div>
         <div className=" mx-4 mt-4">
         
@@ -165,8 +165,8 @@ const Page = () => {
                         <td className="py-2 px-3 text-sm  invisible md:visible absolute md:relative">
                           {hackathon?.["description"]}
                         </td>
-                        <td className="py-2 px-3 text-sm ">
-                          <div className="flex flex-row w-1/2 border text-center bg-red-600 rounded-full justify-center text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium   px-3 py-1 border-gray-600  mx-4 text-xs">
+                        <td className="py-2 px-3 text-sm flex">
+                          <div className="flex">
                             {(currentUser as any)?.hackathon.map(
                               (h: any, index: any) => {
                                 h === hackathon?.["_id"] ? setReg(true) : null;
@@ -182,8 +182,10 @@ const Page = () => {
                             {currentUser?.["role"] === "admin" ? (
                               <RemoveHackathon id={`${hackathon?.["_id"]}`} />
                             ) : (
-                              <RemoveHackathon id={`${hackathon?.["_id"]}`} />
+                              null
                             )}
+                          </div>
+                          <div className="flex px-4 border text-center bg-red-600 rounded-full justify-center text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium py-2 border-gray-600 mx-4 text-xs">
                             <ViewHackathon hackathon={hackathon} />
                           </div>
                         </td>
@@ -243,7 +245,7 @@ const Page = () => {
                         {hackathon?.["description"]}
                       </td>
                       <td className="py-2 px-3 text-sm">
-                        <div className="flex flex-row w-1/2 border text-center bg-red-600 rounded-full justify-center text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium    py-1 border-gray-600  mx-4 text-xs">
+                          <div className="flex">
                           {(currentUser as any)?.hackathon.map(
                             (h: any, index: any) => {
                               h === hackathon?.["_id"] ? setReg(true) : null;
@@ -255,8 +257,10 @@ const Page = () => {
                           ) : (
                             <></>
                           )}
+                        <div className="flex flex-row w-1/2 border text-center bg-red-600 rounded-full justify-center text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium    py-1 border-gray-600  mx-4 text-xs">
                           <ViewHackathon hackathon={hackathon} />
                         </div>
+                          </div>
                       </td>
                     </tr>
                   )

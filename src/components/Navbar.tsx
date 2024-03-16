@@ -23,10 +23,9 @@ const Navbar = () => {
     }
   };
 
-  const getTop5Users = (allUsers:any[], searchInput:string) => {
-    if(searchInput === "") return [];
+  const getTop5Users = (allUsers: any[], searchInput: string): any[] => {
     const filteredUsers = allUsers.filter(user =>
-      user.name.toLowerCase().indexOf(searchInput.toLowerCase()) !== -1
+      user.name.toLowerCase().includes(searchInput.toLowerCase())
     );
     const sortedUsers = filteredUsers.sort((a, b) => {
       if (a.name.length < b.name.length) return -1;
@@ -36,12 +35,9 @@ const Navbar = () => {
     const top5Users = sortedUsers.slice(0, 5);
     return top5Users;
   };
-  
-
-  
+ 
   const handleSearch = (e:any) => {
-    e.preventDefault();
-    if(inputText === "") return setSearchedUser([]);
+    setInputText(e.target.value)
     const top5Users = getTop5Users(allUsers, inputText);
     if(top5Users){
       setCrossButton(true);
@@ -96,12 +92,11 @@ const Navbar = () => {
               </Link>
             </div>
             <li className="text-black pt-2 font-serif flex">
-              <form onSubmit={handleSearch} className="flex">
-                <input
+              <input
                 className="w-full h-8 align-middle text-base px-4 py-2 rounded-l-md focus:outline-none"
                 value={inputText}
                 onChange={
-                  (e) => setInputText(e.target.value)
+                  handleSearch
                 }
               />
               {crossButton ?
@@ -110,7 +105,6 @@ const Navbar = () => {
                 className="font-bold text-black bg-white px-2 rounded-r-md">X</button>) : 
                 <CiSearch className="font-bold h-8 text-black bg-white text-3xl rounded-r-md"/>
                 }
-              </form>
             </li>
             <div className="relative">
                 {searchedUser ? (
