@@ -8,7 +8,6 @@ import { CiSearch } from "react-icons/ci";
 const Navbar = () => {
   const [allUsers, setAllUsers] = useState([]);
   const [crossButton, setCrossButton] = useState(false);
-  const [toggleBtn, setToggleBtn] = useState(false);
   const [searchedUser, setSearchedUser] = useState<any>([]);
   const [inputText, setInputText] = useState("");
   const getUsers = async () => {
@@ -37,72 +36,6 @@ const Navbar = () => {
     return top5Users;
   };
  
-
-  const Menu = () => {
-    return (
-      <div className="flex bg-[rgb(10,1,31)] w-56 delay-75 rounded-lg border border-gray-500 flex-col list-none md:invisible visible absolute right-2 top-20 items-end justify-end p-4">
-        <Link href="/" passHref>
-          <li className="hover:text-gray-300 list-none text-sm align-middle font-serif">
-            Home
-          </li>
-        </Link>
-        <Link href="/hackathon" passHref>
-          <li className="hover:text-gray-300 list-none text-sm font-serif mt-2">
-            Hackathons
-          </li>
-        </Link>
-        <li className="text-black pt-2 font-serif flex justify-end">
-              <input
-                className="h-8 w-[70%] text-base px-4 py-2 rounded-l-md focus:outline-none"
-                value={inputText}
-                onChange={
-                  handleSearch
-                }
-              />
-              {crossButton ?
-                (<button 
-                onClick={() => {setSearchedUser([]); setInputText(""); setCrossButton(false)}}
-                className="font-bold text-black bg-white px-2 rounded-r-md">X</button>) : 
-                <CiSearch className="font-bold h-8 text-black bg-white text-3xl rounded-r-md"/>
-                }
-            </li>
-              {session ? (
-                <Link href="/chat" passHref>
-                  <li className="hover:text-gray-300 text-sm pt-2 font-serif">
-                    Chat
-                  </li>
-                </Link>
-              ) : (
-                <></>
-              )}
-              {!session ? (
-                <Link href="/login" passHref>
-                  <li className="hover:text-gray-300 bg-[rgb(175,129,235)] px-6 text-sm text-black py-2 rounded-3xl font-serif ">
-                    Login
-                  </li>
-                </Link>
-              ) : (
-                <>
-                  <Link href="/profile" passHref>
-                    <li className="hover:text-gray-300  text-sm pt-2 font-serif">
-                      Profile
-                    </li>
-                  </Link>
-
-                  <li className="">
-                    <button
-                      onClick={() => signOut()}
-                      className="hover:text-gray-300 bg-[rgb(175,129,235)] mt-2 px-6 text-sm text-black py-2 rounded-3xl font-serif"
-                    >
-                      Logout
-                    </button>
-                  </li>
-                </>
-              )}
-      </div>
-    )
-  }
-
   const handleSearch = (e:any) => {
     
     setInputText(e.target.value)
@@ -140,7 +73,6 @@ const Navbar = () => {
   const { data: session }: any = useSession();
   return (
     <div className=" w-screen bg-[rgb(10,1,31)] rounded-lg border-b border-gray-500 ">
-      {toggleBtn && <Menu/>}
       <div className="mx-4">
         <ul className="flex justify-between items-center  p-4">
           <div className="">
@@ -163,7 +95,7 @@ const Navbar = () => {
                 </li>
               </Link>
             </div>
-            <li className="text-black pt-2 font-serif flex md:visible invisible">
+            <li className="text-black pt-2 font-serif flex">
               <input
                 className="w-full h-8 align-middle text-base px-4 py-2 rounded-l-md focus:outline-none"
                 value={inputText}
@@ -180,7 +112,7 @@ const Navbar = () => {
             </li>
             <div className="relative">
                 {searchedUser ? (
-                  <div className="absolute md:left-0 right-40 top-14 bg-[rgb(10,1,31)] w-60 rounded-lg border border-gray-500">
+                  <div className="absolute md:left-0 right-10 top-14 bg-[rgb(10,1,31)] w-60 rounded-lg border border-gray-500">
                     {searchedUser.map((user: any) => (
                       <Link href={`/profile/${user.username}`} key={user._id}>
                         <li className="hover:text-gray-300 text-sm px-4 py-2 font-serif">
@@ -228,11 +160,9 @@ const Navbar = () => {
                 </>
               )}
             </div>
-            <button className="visible md:invisible md:absolute mt-2"
-              onClick={() => setToggleBtn(!toggleBtn)}
-            >
+            <div className="visible md:invisible md:absolute mt-2">
               <FiAlignRight />
-            </button>
+            </div>
           </div>
         </ul>
       </div>
