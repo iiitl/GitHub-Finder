@@ -25,7 +25,7 @@ const Navbar = () => {
 
   const getTop5Users = (allUsers: any[], searchInput: string): any[] => {
     const filteredUsers = allUsers.filter(user =>
-      user.name.toLowerCase().includes(searchInput.toLowerCase())
+      user.name.toLowerCase().startsWith(searchInput.toLowerCase())
     );
     const sortedUsers = filteredUsers.sort((a, b) => {
       if (a.name.length < b.name.length) return -1;
@@ -37,7 +37,11 @@ const Navbar = () => {
   };
  
   const handleSearch = (e:any) => {
+    
     setInputText(e.target.value)
+    if(e.target.value === ""){
+      return setSearchedUser([]);
+    }
     const top5Users = getTop5Users(allUsers, inputText);
     if(top5Users){
       setCrossButton(true);
