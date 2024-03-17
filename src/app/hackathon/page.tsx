@@ -118,7 +118,6 @@ const Page = () => {
         </div>
         <div className=" mx-4 mt-4">
         
-        {ongoingHackathons ? (
           <div className=" ">
           Ongoing
           <div className="shadow-md rounded-md  ">
@@ -142,6 +141,8 @@ const Page = () => {
                   </th>
                 </tr>
               </thead>
+        {ongoingHackathons ? (
+
               <tbody>
                 {hackathons?.map(
                   (hackathon, index) =>
@@ -193,12 +194,12 @@ const Page = () => {
                     )
                 )}
               </tbody>
+        ): <p className="my-4">No Ongoing Hackthon</p>}
+
             </table>
           </div>
           </div>
-        ): <p className="my-4">No Ongoing Hackthon</p>}
        
-        {closedHackathons ? (
           <div className="shadow-md rounded-md ">
           Closed
           <table className="min-w-full overflow-x-auto border-gray-600 border  mb-4 rounded-xl container">
@@ -221,6 +222,8 @@ const Page = () => {
                 </th>
               </tr>
             </thead>
+        {closedHackathons ? (
+
             <tbody>
               {hackathons?.map(
                 (hackathon, index) =>
@@ -266,9 +269,9 @@ const Page = () => {
                   )
               )}
             </tbody>
+        ) : <p>No Closed Hackthon</p>}
           </table>
         </div>
-        ) : <p>No Closed Hackthon</p>}
         </div>
       </div>
     </>
